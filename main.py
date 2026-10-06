@@ -1,5 +1,5 @@
 def student_name_validation() -> str:
-    student_name = str(input("student : "))
+    student_name = str(input("student name : "))
     return student_name
 
 def validate_course() -> str:
@@ -34,10 +34,12 @@ def validate_year()->int:
 
 def validate_document_type()->str:
     document_type = str(input("Document name : "))
+    document_type= document_type.upper()
+    
 
     is_valid_document_type=False
     while is_valid_document_type == False :
-            if document_type  in   document_type:
+            if document_type  in   document_types:
                 is_valid_document_type=True
                 return document_type
             else:
@@ -70,19 +72,32 @@ def submit_document():
     unit = str(input("Enter unit: "))
     title = str(input("Enter document title: "))
 
-
+    document_type = validate_document_type()
+    filename = validate_file()
 
     submission = {
-        "student_name": student,    
-        "course_name": course,
-        "course_year": year,
+        "student_name": student_name,    
+        "course_name": course_name,
+        "course_year": course_year,
         "unit": unit,
         "title": title,
         "type": document_type,
         "filename": filename
     }
 
-    return submission          
+    return submission
+
+
+
+def view_submission(student_name, course_name, course_year, unit, title, document_type, filename):
+
+    print(f"Student name: {student_name}")
+    print(f"Course name: {course_name}")
+    print(f"Course year: {course_year}")
+    print(f"Unit: {unit}")
+    print(f"Title: {title}")
+    print(f"Type: {document_type}")
+    print(f"Filename: {filename}")
 
 run=True
 while run:
@@ -104,13 +119,22 @@ while run:
         student_name = student_name_validation()
         course_name = validate_course()
         course_year= validate_year()
-        document_type = ("Pastpaper","CAT","Assignment","Notes","Revision")
+        document_types = ("PASTPAPER","CAT","ASSIGNMENT","NOTES","REVISION")
         filename=validate_file()
-        submisssion=submit_document()
+        
 
 
     elif option == 2:
         print("View Submissions")
+
+        student_name, course_name, course_year, unit, title, document_type, filename = submit_document()
+
+
+        view_submission(student_name, course_name, course_year, unit, title, document_type, filename)
+                  
+
+
+
     elif option == 3:
         print("Exit")
         run = False
